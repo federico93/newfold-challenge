@@ -17,7 +17,7 @@ describe('Delete Product Controller unit test', () => {
       }
     }
 
-    // Mock Use Case with business logic
+    // Mock Use Case where business logic is located
     const useCase = {
       execute: jest.fn().mockImplementation((deleteProductDTO) => {
         return null
