@@ -1,9 +1,7 @@
-class DeleteProductController {
-  constructor (useCase) {
-    this.useCase = useCase
-  }
+const BaseController = require('../../shared/controllers/baseController.js')
 
-  async execute (req, res) {
+class DeleteProductController extends BaseController {
+  async _execute (req) {
     const deleteProductDTO = {
       customerId: req.body.customer_id,
       productName: req.body.product_name,
@@ -12,7 +10,7 @@ class DeleteProductController {
 
     await this.useCase.execute(deleteProductDTO)
 
-    res.status(200).json({ message: 'Product deleted!' })
+    return { message: 'Product deleted!' }
   }
 }
 

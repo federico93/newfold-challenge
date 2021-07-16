@@ -22,7 +22,7 @@ describe('List Scheduled Emails Controller unit test', () => {
       ])
     }
 
-    const controller = new ListScheduledEmailsController(useCase)
+    const controller = new ListScheduledEmailsController({ useCase })
 
     await controller.execute(req, res)
 

@@ -1,11 +1,9 @@
+const BaseController = require('../../shared/controllers/baseController.js')
+
 const ProductMapper = require('../../mappers/productMapper.js')
 
-class CreateProductController {
-  constructor (useCase) {
-    this.useCase = useCase
-  }
-
-  async execute (req, res) {
+class CreateProductController extends BaseController {
+  async _execute (req) {
     const productDTO = {
       customerId: req.body.customer_id,
       productName: req.body.product_name,
@@ -16,7 +14,7 @@ class CreateProductController {
 
     const product = await this.useCase.execute(productDTO)
 
-    res.status(200).json(ProductMapper.toDTO(product))
+    return ProductMapper.toDTO(product)
   }
 }
 

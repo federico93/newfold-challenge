@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "title": "CreateProductSchema",
+  "required": [
+    "customer_id",
+    "product_name",
+    "domain"
+  ],
+  "properties": {
+    "customer_id": { "type": "string" },
+    "product_name": { "type": "string" },
+    "domain": { "type": "string" }
+  }
+}
