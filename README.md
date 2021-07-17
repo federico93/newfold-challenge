@@ -1,6 +1,9 @@
 
 # newfold-challenge
 REST API solution for the given challenge
+
+Built with TDD and DDD, in nodejs using express
+
 ## Requirements
 - MySQL database with table "products":
 ```sql
@@ -33,6 +36,11 @@ APP_PORT=3000
 ```
 npm install
 npm start
+```
+
+## Testing (coverage near 100%)
+```
+npm test
 ```
 
 ## Endpoints
