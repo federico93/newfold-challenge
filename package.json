@@ -2,8 +2,9 @@
   "name": "newfold-challenge",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
+    "start": "nodemon -L",
     "test": "standard --env jest && jest --testTimeout=10000 --coverage --detectOpenHandles --forceExit --silent --verbose"
   },
   "repository": {
@@ -21,7 +22,12 @@
     "standard": "^16.0.3"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
     "jsonschema": "^1.4.0",
-    "sequelize": "^6.6.5"
+    "mysql2": "^2.2.5",
+    "nodemon": "^2.0.12",
+    "sequelize": "^4.42.0"
   }
 }
