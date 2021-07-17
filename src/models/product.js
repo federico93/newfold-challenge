@@ -1,7 +1,8 @@
+const DateHelper = require('../helpers/dateHelper.js')
+
 class Product {
-  constructor (customerId, productName, domain, startDate, durationMonths) {
+  constructor (customerId, domain, startDate, durationMonths) {
     this.customerId = customerId
-    this.productName = productName
     this.domain = domain
     this.startDate = startDate
     this.durationMonths = durationMonths
@@ -9,10 +10,6 @@ class Product {
 
   getCustomerId () {
     return this.customerId
-  }
-
-  getProductName () {
-    return this.productName
   }
 
   getDomain () {
@@ -25,6 +22,29 @@ class Product {
 
   getDurationMonths () {
     return this.durationMonths
+  }
+
+  getEmailDates () {
+    const emailDates = []
+    for (const offset of this._getEmailDatesOffsets()) {
+      const date = offset.field === 'start_date' ? this.getStartDate() : this.getExpirationDate()
+
+      emailDates.push(DateHelper.addDays(date, offset.days))
+    }
+
+    return emailDates
+  }
+
+  getExpirationDate () {
+    return DateHelper.addMonths(this.getStartDate(), this.getDurationMonths())
+  }
+
+  getProductName () {
+    throw new Error('implement in child classes')
+  }
+
+  _getEmailDatesOffsets () {
+    return []
   }
 }
 
