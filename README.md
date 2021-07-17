@@ -4,6 +4,8 @@ REST API solution for the given challenge
 
 Built with TDD and DDD, in nodejs using express
 
+Main file is located at src/app.js
+
 ## Requirements
 - MySQL database with table "products":
 ```sql
