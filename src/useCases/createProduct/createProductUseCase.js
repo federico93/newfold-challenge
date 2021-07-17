@@ -1,4 +1,4 @@
-const Product = require('../../models/product.js')
+const ProductFactory = require('../../models/productFactory.js')
 
 class CreateProductUseCase {
   constructor (productRepository) {
@@ -6,7 +6,7 @@ class CreateProductUseCase {
   }
 
   async execute (productDTO) {
-    const product = new Product(
+    const product = ProductFactory.createProduct(
       productDTO.customerId,
       productDTO.productName,
       productDTO.domain,

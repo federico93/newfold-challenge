@@ -18,6 +18,18 @@ class ProductRepository {
 
     return ProductMapper.toDomain(dbItem)
   }
+
+  delete (customerId, productName, domain) {
+    const dbItem = this.table.findOne({
+      where: {
+        customer_id: customerId,
+        product_name: productName,
+        domain: domain
+      }
+    })
+
+    return dbItem.destroy()
+  }
 }
 
 module.exports = ProductRepository

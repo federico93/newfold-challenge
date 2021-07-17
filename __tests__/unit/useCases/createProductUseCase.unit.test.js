@@ -1,5 +1,5 @@
 const CreateProductUseCase = require('../../../src/useCases/createProduct/createProductUseCase.js')
-const Product = require('../../../src/models/product.js')
+const Domain = require('../../../src/models/domain.js')
 
 describe('Create Product Use Case unit test', () => {
   test('It should create a product', async () => {
@@ -30,9 +30,8 @@ describe('Create Product Use Case unit test', () => {
     expect(createdProduct.getDurationMonths()).toEqual(productDTO.durationMonths)
 
     expect(productRepository.create).toHaveBeenCalledTimes(1)
-    expect(productRepository.create).toHaveBeenCalledWith(new Product(
+    expect(productRepository.create).toHaveBeenCalledWith(new Domain(
       productDTO.customerId,
-      productDTO.productName,
       productDTO.domain,
       productDTO.startDate,
       productDTO.durationMonths

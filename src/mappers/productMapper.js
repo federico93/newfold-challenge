@@ -1,4 +1,4 @@
-const Product = require('../models/product.js')
+const ProductFactory = require('../models/productFactory.js')
 
 module.exports = {
   toDTO: (product) => {
@@ -22,7 +22,7 @@ module.exports = {
   },
 
   toDomain: (dbItem) => {
-    return new Product(
+    return ProductFactory.createProduct(
       dbItem.customer_id,
       dbItem.product_name,
       dbItem.domain,
