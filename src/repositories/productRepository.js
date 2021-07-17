@@ -5,22 +5,33 @@ const ProductMapper = require('../mappers/productMapper.js')
 class ProductRepository {
   constructor (sequelize) {
     this.table = sequelize.define('product', {
-      customer_id: DataTypes.STRING,
-      product_name: DataTypes.STRING,
-      domain: DataTypes.STRING,
+      customer_id: {
+        type: DataTypes.STRING,
+        primaryKey: true
+      },
+      product_name: {
+        type: DataTypes.STRING,
+        primaryKey: true
+      },
+      domain: {
+        type: DataTypes.STRING,
+        primaryKey: true
+      },
       start_date: DataTypes.DATEONLY,
       duration_months: DataTypes.INTEGER
+    }, {
+      timestamps: false
     })
   }
 
-  create (product) {
-    const dbItem = this.table.create(ProductMapper.toPersistance(product))
+  async create (product) {
+    const dbItem = await this.table.create(ProductMapper.toPersistance(product))
 
     return ProductMapper.toDomain(dbItem)
   }
 
-  delete (customerId, productName, domain) {
-    const dbItem = this.table.findOne({
+  async delete (customerId, productName, domain) {
+    const dbItem = await this.table.findOne({
       where: {
         customer_id: customerId,
         product_name: productName,
@@ -29,6 +40,14 @@ class ProductRepository {
     })
 
     return dbItem.destroy()
+  }
+
+  async list () {
+    const dbItems = await this.table.findAll()
+
+    return dbItems.map((dbItem) => {
+      return ProductMapper.toDomain(dbItem)
+    })
   }
 }
 

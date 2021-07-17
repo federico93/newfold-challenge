@@ -34,11 +34,22 @@ describe('ProductRepository unit test', () => {
     // Expect db connection calls
     expect(dbConnection.define).toHaveBeenCalledTimes(1)
     expect(dbConnection.define).toHaveBeenCalledWith('product', expect.objectContaining({
-      customer_id: expect.anything(),
-      product_name: expect.anything(),
-      domain: expect.anything(),
+      customer_id: expect.objectContaining({
+        type: expect.anything(),
+        primaryKey: true
+      }),
+      product_name: expect.objectContaining({
+        type: expect.anything(),
+        primaryKey: true
+      }),
+      domain: expect.objectContaining({
+        type: expect.anything(),
+        primaryKey: true
+      }),
       start_date: expect.anything(),
       duration_months: expect.anything()
+    }), expect.objectContaining({
+      timestamps: false
     }))
 
     expect(dbConnection.create).toHaveBeenCalledTimes(1)
@@ -125,5 +136,49 @@ describe('ProductRepository unit test', () => {
     })
 
     expect(dbConnection.destroy).toHaveBeenCalledTimes(1)
+  })
+
+  test('It should list products', async () => {
+    // Mock sequelize db connection
+    const dbConnection = {
+      define: jest.fn().mockReturnThis(),
+      findAll: jest.fn().mockReturnValue([{
+        product_name: 'domain',
+        customer_id: 'Cust123',
+        domain: 'xyzzy.com',
+        start_date: '2020-01-01',
+        duration_months: 3
+      }, {
+        product_name: 'pdomain',
+        customer_id: 'Cust2345',
+        domain: 'xyzzy.com',
+        start_date: '2020-01-01',
+        duration_months: 0
+      }, {
+        product_name: 'hosting',
+        customer_id: 'Cust2345',
+        domain: 'plugh.com',
+        start_date: '2020-01-01',
+        duration_months: 9
+      }, {
+        product_name: 'hosting',
+        customer_id: 'Cust3456',
+        domain: 'abcdefg.net',
+        start_date: '2022-03-28',
+        duration_months: 6
+      }])
+    }
+
+    const repo = new ProductRepository(dbConnection)
+
+    const res = await repo.list()
+
+    expect(dbConnection.findAll).toHaveBeenCalledTimes(1)
+    expect(res.length).toEqual(4)
+
+    expect(res[0].getCustomerId()).toEqual('Cust123')
+    expect(res[1].getCustomerId()).toEqual('Cust2345')
+    expect(res[2].getCustomerId()).toEqual('Cust2345')
+    expect(res[3].getCustomerId()).toEqual('Cust3456')
   })
 })
