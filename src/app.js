@@ -24,7 +24,7 @@ const app = express()
 
 app.use(bodyparser.json())
 
-const dbConnection = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_USER, process.env.MYSQL_ROOT_PASSWORD, {
+const dbConnection = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD, {
   host: process.env.MYSQL_LOCAL_HOST,
   port: process.env.MYSQL_LOCAL_PORT,
   dialect: 'mysql',
@@ -62,5 +62,4 @@ app.post('/v1/products', createProductController.execute.bind(createProductContr
 app.delete('/v1/products', deleteProductController.execute.bind(deleteProductController))
 app.get('/v1/scheduled-emails', listScheduledEmailsController.execute.bind(listScheduledEmailsController))
 
-// Listen port 8000
-app.listen(process.env.NODE_DOCKER_PORT)
+app.listen(process.env.APP_PORT)
